@@ -46,4 +46,4 @@ If this policy ever changes, the new version will be posted here with a new date
 
 ## Contact
 
-Questions about privacy: [your new Watchword email], or open an issue on the project's GitHub page.
+Questions about privacy: watchword_help@protonmail.com, or open an issue on the project's GitHub page.
