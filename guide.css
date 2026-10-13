@@ -1,0 +1,176 @@
+/* Protect every device: builds on options.css tokens */
+
+.back { margin: -1rem 0 1.5rem; }
+
+.consent {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--pine);
+  border-radius: 10px;
+  padding: .9rem 1.1rem;
+}
+.consent p { margin: 0; color: var(--slate); }
+.consent strong { color: var(--ink); }
+
+.filter { margin-top: 2.25rem; }
+.hint.small { font-size: .925rem; margin-top: .75rem; }
+
+.values {
+  margin: 0;
+  display: grid;
+  gap: .9rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+.values div { display: grid; gap: .35rem; }
+.values dt { font-weight: 600; font-size: .95rem; }
+.values dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+  font-size: .9em;
+  background: var(--mist);
+  border-radius: 5px;
+  padding: .1em .35em;
+  overflow-wrap: anywhere;
+}
+.values code { font-size: .95rem; padding: .25em .5em; }
+
+.copy {
+  font: inherit;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--pine);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: .25rem .7rem;
+  cursor: pointer;
+}
+.copy:hover { border-color: var(--pine); }
+.copy.done { background: var(--pine-soft); border-color: var(--pine-soft); }
+.copy:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+
+/* Device tabs */
+.tabs {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  margin-top: 2.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.tabs [role="tab"] {
+  font: inherit;
+  font-weight: 600;
+  color: var(--slate);
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: .6rem .5rem .55rem;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+.tabs [role="tab"]:hover { color: var(--ink); }
+.tabs [role="tab"][aria-selected="true"] { color: var(--ink); border-bottom-color: var(--pine); }
+.tabs [role="tab"]:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; border-radius: 4px; }
+
+.panel { margin-top: 1.5rem; }
+.panel h3 { margin: 2rem 0 .35rem; font-size: 1.1rem; font-weight: 650; }
+.panel h3:first-of-type { margin-top: .5rem; }
+
+/* Simple line drawing of the device, one quiet accent per panel */
+.device {
+  display: block;
+  width: 9rem;
+  height: auto;
+  margin: 0 0 .5rem;
+  fill: none;
+  stroke: var(--pine);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.device .screen { fill: var(--pine-soft); stroke-width: 1.4; }
+.device .lines { stroke: var(--slate); stroke-width: 2; opacity: .7; }
+
+/* Numbered steps: these really are a sequence */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: .75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: .9rem;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2.6rem;
+  color: var(--slate);
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -.05rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--pine);
+  background: var(--pine-soft);
+}
+.steps strong { display: block; color: var(--ink); font-weight: 600; }
+.steps em { font-style: normal; color: var(--ink); font-weight: 600; }
+
+/* The path through the menus, as a trail */
+.trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem 0;
+  margin: .4rem 0 .45rem;
+}
+.trail span {
+  position: relative;
+  font-size: .875rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: .15rem .5rem;
+}
+.trail span + span { margin-left: 1.1rem; }
+.trail span + span::before {
+  content: "›";
+  position: absolute;
+  left: -.85rem;
+  color: var(--slate);
+}
+
+.note {
+  margin: 1.25rem 0 0;
+  padding: .8rem 1rem;
+  border-radius: 10px;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  color: var(--slate);
+  font-size: .95rem;
+}
+
+@media (max-width: 520px) {
+  .steps li { padding-left: 2.3rem; }
+  .device { width: 7rem; }
+}

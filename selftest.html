@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watchword self-test</title>
+  <link rel="stylesheet" href="options.css">
+  <style>
+    .summary { font-size: 1.6rem; font-weight: 700; margin: 0; }
+    .summary.pass { color: var(--pine); }
+    .summary.fail { color: var(--brick); }
+    .results { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .results th, .results td { text-align: left; padding: .65rem .5rem; border-top: 1px solid var(--line); vertical-align: top; }
+    .results th { font-weight: 600; }
+    .results td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .ok { color: var(--pine); font-weight: 600; }
+    .bad { color: var(--brick); font-weight: 600; }
+    .detail-list { margin: .5rem 0 0; padding-left: 1.1rem; color: var(--slate); font-size: .9rem; overflow-wrap: anywhere; }
+    .detail-list li.bad { color: var(--brick); }
+    details.all { margin-top: 2rem; }
+    details.all > summary { cursor: pointer; color: var(--pine); font-weight: 600; }
+    .table-wrap { overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <img src="icons/icon-128.png" alt="" width="44" height="44">
+      <div>
+        <h1>Watchword self-test</h1>
+        <p class="status">Runs on this computer, using the files in this folder.</p>
+      </div>
+    </header>
+
+    <p class="hint">This puts every word from the default word packs through Watchword's matching engine in many disguises, checks the blocked sites, and makes sure everyday searches stay open. Nothing explicit is shown unless you open the details at the bottom.</p>
+    <p class="hint">It tests what gets caught. To check that tabs actually close, block a harmless word like “ball” and search “b.a.l.l”: every word uses the same closing code.</p>
+
+    <section class="tester" aria-live="polite">
+      <p id="summary" class="summary">Running…</p>
+      <p id="sub" class="hint" style="margin:.4rem 0 0"></p>
+      <div class="table-wrap">
+        <table class="results">
+          <thead><tr><th>Check</th><th>Result</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <details class="all" id="all">
+      <summary>Show every check (contains explicit words)</summary>
+      <div id="details"></div>
+    </details>
+  </main>
+  <script src="core.js"></script>
+  <script src="packs.js"></script>
+  <script src="selftest.js"></script>
+</body>
+</html>

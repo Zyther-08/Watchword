@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watchword settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <img src="icons/icon-128.png" alt="" width="44" height="44">
+      <div>
+        <h1>Watchword</h1>
+        <p id="status" class="status"></p>
+      </div>
+    </header>
+
+    <a class="guide-link" href="guide.html">
+      <strong>Protect every device</strong>
+      <span>Watchword covers this browser. Step-by-step guides cover the whole computer, your phone and your home Wi-Fi.</span>
+    </a>
+
+    <div id="permission-banner" class="banner" hidden>
+      <p>Watchword can't see your searches yet. Allow it to read website addresses so it can close blocked searches.</p>
+      <button id="grant" type="button" class="btn primary">Allow access</button>
+    </div>
+
+    <section aria-labelledby="words-h">
+      <h2 id="words-h">Blocked words</h2>
+      <p class="hint">A word only counts when it stands on its own, so blocking “ass” leaves “pass” and “provpass” alone. It's still caught when it's split up: “b.a.l.l”, “b_all”, “b?all” and “b all” are all treated as “ball”.</p>
+      <form id="word-form" class="adder">
+        <label for="word-input" class="sr-only">Word or phrase to block</label>
+        <input id="word-input" type="text" autocomplete="off" spellcheck="false" placeholder="Add a word or phrase (use commas to add several)">
+        <button class="btn primary" type="submit">Block</button>
+      </form>
+      <p id="word-note" class="form-note" role="status"></p>
+      <p class="hint fuzzy-hint">Click <span class="fuzzy-sample" aria-hidden="true">≈</span> on a word to also catch misspellings, like “cuomshot” for “cumshot”. On words under 5 letters it only catches repeated letters, like “nsfww” for “nsfw”, because changing a letter would turn “porn” into “pork” or “born”.</p>
+      <div class="list-head">
+        <span id="word-count" class="count"></span>
+        <span class="list-actions">
+          <button type="button" id="fuzzy-all-on" class="link" hidden>≈ on for all</button>
+          <button type="button" id="fuzzy-all-off" class="link" hidden>≈ off for all</button>
+          <button type="button" id="starter" class="link" aria-expanded="false" aria-controls="packs">Add word packs</button>
+          <button type="button" id="toggle-hide" class="link"></button>
+        </span>
+      </div>
+      <div id="packs" class="packs" hidden>
+        <h3>Word packs</h3>
+        <p class="hint">Tick the lists you want and add them in one go. Plurals and the usual tricks are caught automatically, and words marked ≈ also catch misspellings: they were checked against the most common English and Swedish words so everyday searches stay open. You can remove any single word later.</p>
+        <div id="pack-list"></div>
+        <div class="lock-row">
+          <button type="button" id="add-packs" class="btn primary">Add selected</button>
+          <button type="button" id="close-packs" class="btn">Cancel</button>
+        </div>
+      </div>
+      <ul id="word-list" class="chips"></ul>
+    </section>
+
+    <section class="tester" aria-labelledby="test-h">
+      <h2 id="test-h">Try it</h2>
+      <label for="test-input" class="hint">Type a search the way someone might try to sneak it past, or paste a link.</label>
+      <input id="test-input" type="text" autocomplete="off" spellcheck="false" placeholder="b.a.l.l   or   https://www.google.com/search?q=b_all">
+      <div id="verdict" class="verdict" aria-live="polite"></div>
+    </section>
+
+    <section aria-labelledby="sites-h">
+      <h2 id="sites-h">Blocked sites</h2>
+      <p class="hint">Any tab that opens one of these sites, or any page on it, is closed.</p>
+      <form id="site-form" class="adder">
+        <label for="site-input" class="sr-only">Site to block</label>
+        <input id="site-input" type="text" autocomplete="off" spellcheck="false" placeholder="example.com">
+        <button class="btn primary" type="submit">Block site</button>
+      </form>
+      <p id="site-note" class="form-note" role="status"></p>
+      <ul id="site-list" class="chips"></ul>
+    </section>
+
+    <section aria-labelledby="help-h">
+      <h2 id="help-h">Help searches</h2>
+      <p class="hint">Searches for help get through even though they contain a blocked word, so “how to quit porn” stays open. Any other blocked word in the same search still closes the tab. This list is fixed and can’t be added to, so it can never become a way around your blocked words.</p>
+      <ul id="help-list" class="chips fixed"></ul>
+      <div class="toggles single">
+        <label class="toggle">
+          <input type="checkbox" data-opt="helpPhrases">
+          <span><strong>Let these help searches through</strong>Turning this off closes them like any other blocked search. You can turn it back on any time, since the list is fixed and can't be changed.</span>
+        </label>
+      </div>
+    </section>
+
+    <section aria-labelledby="rules-h">
+      <h2 id="rules-h">How strict</h2>
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" data-opt="spaces">
+          <span><strong>Catch words split by spaces</strong>“b all” and “b a l l” count as “ball”. Very rarely two short words side by side can join into a blocked one; turn this off if that happens.</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" data-opt="leet">
+          <span><strong>Catch look-alike characters</strong>Numbers and symbols standing in for letters, like b4ll, 8all, @ss or $ex.</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" data-opt="plurals">
+          <span><strong>Block plurals too</strong>Blocking “ball” also blocks “balls”.</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" data-opt="typing">
+          <span><strong>Close while typing</strong>Close the tab as soon as a blocked word is typed into a search box, before Enter is pressed. Words of 5+ letters close instantly; shorter ones wait a split second, so typing “assignment” doesn't close the tab at “ass”.</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" data-opt="instantTyping">
+          <span><strong>Close instantly, even mid-word</strong>Short words close the moment they're typed too. Strictest, but typing “assignment” or “balloon” will close the tab if “ass” or “ball” is blocked.</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" data-opt="safeSearch">
+          <span><strong>Force SafeSearch</strong>Strict SafeSearch on Google, Bing and DuckDuckGo, and Restricted Mode on YouTube.</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" data-opt="noImageSearch">
+          <span><strong>Turn off image search</strong>The Images tab on Google, Bing, DuckDuckGo and other search engines goes to the normal results for the same search instead. Pictures on ordinary websites aren't affected. Turning this off needs unlocking, but you can open image search for a short while below.</span>
+        </label>
+        <div id="image-pass" class="image-pass" hidden></div>
+        <label class="toggle">
+          <input type="checkbox" data-opt="keepWindow">
+          <span><strong>Keep the window open</strong>If the closed tab was the last one, open a new tab so the whole window doesn't disappear.</span>
+        </label>
+      </div>
+    </section>
+
+    <section aria-labelledby="lock-h">
+      <h2 id="lock-h">Lock</h2>
+      <div id="lock-area" class="lock-area"></div>
+    </section>
+
+    <footer class="foot">
+      <p>Adding words and sites never needs unlocking. Everything stays on this device; Watchword sends nothing anywhere.</p>
+    </footer>
+  </main>
+  <script src="core.js"></script>
+  <script src="packs.js"></script>
+  <script src="challenge.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

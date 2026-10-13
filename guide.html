@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protect every device</title>
+  <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="guide.css">
+</head>
+<body>
+  <main class="page guide">
+    <header class="masthead">
+      <img src="icons/icon-128.png" alt="" width="44" height="44">
+      <div>
+        <h1>Protect every device</h1>
+        <p class="status">Watchword covers this browser. These guides cover everything else: the whole computer, your phone and your home Wi-Fi.</p>
+      </div>
+    </header>
+
+    <p class="back"><a class="link" href="options.html">Back to Watchword settings</a></p>
+
+    <aside class="consent">
+      <p><strong>Your own devices only.</strong> Set these up on your own devices, or on your child's as their parent. Changing someone else's device without their knowledge isn't right, even with good intentions.</p>
+    </aside>
+
+    <section class="filter" aria-labelledby="filter-h">
+      <h2 id="filter-h">The filter these guides use</h2>
+      <p class="hint">Cloudflare's family filter is free, needs no account, and blocks adult and malicious websites for every app and browser on a device. The guides tell you which of these to enter where. Copy buttons put a value on your clipboard; on a phone, read it from this screen.</p>
+      <dl class="values">
+        <div>
+          <dt>Addresses</dt>
+          <dd><code>1.1.1.3</code><button type="button" class="copy" data-copy="1.1.1.3">Copy</button></dd>
+          <dd><code>1.0.0.3</code><button type="button" class="copy" data-copy="1.0.0.3">Copy</button></dd>
+        </div>
+        <div>
+          <dt>IPv6 addresses</dt>
+          <dd><code>2606:4700:4700::1113</code><button type="button" class="copy" data-copy="2606:4700:4700::1113">Copy</button></dd>
+          <dd><code>2606:4700:4700::1003</code><button type="button" class="copy" data-copy="2606:4700:4700::1003">Copy</button></dd>
+        </div>
+        <div>
+          <dt>Secure DNS address</dt>
+          <dd><code>https://family.cloudflare-dns.com/dns-query</code><button type="button" class="copy" data-copy="https://family.cloudflare-dns.com/dns-query">Copy</button></dd>
+        </div>
+        <div>
+          <dt>Private DNS name</dt>
+          <dd><code>family.cloudflare-dns.com</code><button type="button" class="copy" data-copy="family.cloudflare-dns.com">Copy</button></dd>
+        </div>
+      </dl>
+      <p class="hint small">Using NextDNS instead? Its Setup page shows your own values for each device. Use those wherever a guide says to enter Cloudflare's.</p>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="Devices">
+      <button type="button" role="tab" id="tab-windows" aria-controls="panel-windows" aria-selected="true">Windows computer</button>
+      <button type="button" role="tab" id="tab-android" aria-controls="panel-android" aria-selected="false" tabindex="-1">Android phone</button>
+      <button type="button" role="tab" id="tab-iphone" aria-controls="panel-iphone" aria-selected="false" tabindex="-1">iPhone</button>
+      <button type="button" role="tab" id="tab-router" aria-controls="panel-router" aria-selected="false" tabindex="-1">Home router</button>
+    </nav>
+
+    <!-- Windows -->
+    <section class="panel" id="panel-windows" role="tabpanel" aria-labelledby="tab-windows">
+      <svg class="device" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="28" y="10" width="104" height="66" rx="6" />
+        <rect x="36" y="18" width="88" height="50" rx="2" class="screen" />
+        <path d="M14 84h132l-8 8H22z" />
+        <path d="M60 36h40M60 44h28M60 52h34" class="lines" />
+      </svg>
+
+      <h3>1. Filter the whole computer</h3>
+      <p class="hint">This covers every browser and app on the computer. Wi-Fi and a cable (Ethernet) are set separately, so do it for each one you use.</p>
+      <ol class="steps">
+        <li>
+          <strong>Open your connection's settings.</strong>
+          <span class="trail"><span>Settings</span><span>Network &amp; internet</span><span>Wi-Fi or Ethernet</span></span>
+          On Wi-Fi, open the properties of the network you're connected to.
+        </li>
+        <li>
+          <strong>Switch DNS to manual.</strong>
+          Next to <em>DNS server assignment</em>, click <em>Edit</em> and choose <em>Manual</em>.
+        </li>
+        <li>
+          <strong>Enter the filter's addresses.</strong>
+          Turn on <em>IPv4</em>. Enter <code>1.1.1.3</code> as Preferred DNS and <code>1.0.0.3</code> as Alternate DNS.
+        </li>
+        <li>
+          <strong>Turn on encryption.</strong>
+          For <em>DNS over HTTPS</em>, choose <em>On (manual template)</em> and enter the secure DNS address <code>https://family.cloudflare-dns.com/dns-query</code>. If your Windows only offers <em>On (automatic template)</em>, choose that. Turn <em>Fallback to plaintext</em> off.
+        </li>
+        <li>
+          <strong>Do the same for IPv6.</strong>
+          Turn on <em>IPv6</em> and enter <code>2606:4700:4700::1113</code> and <code>2606:4700:4700::1003</code>, with the same encryption settings. Some networks use IPv6, and this closes that gap.
+        </li>
+        <li>
+          <strong>Save.</strong>
+          Windows asks for an administrator password. That's good: it means everyday accounts can't change this back.
+        </li>
+      </ol>
+
+      <h3>2. Filter the browsers too</h3>
+      <p class="hint">Browsers can use their own secure DNS and skip the computer's setting, so point each browser you have at the filter as well.</p>
+      <ol class="steps">
+        <li>
+          <strong>Edge.</strong>
+          <span class="trail"><span>edge://settings</span><span>search “secure DNS”</span></span>
+          Turn on <em>Use secure DNS</em>, pick <em>Choose a service provider</em>, and enter the secure DNS address.
+        </li>
+        <li>
+          <strong>Chrome.</strong>
+          <span class="trail"><span>chrome://settings/security</span><span>Use secure DNS</span></span>
+          Choose to add a custom provider, and enter the secure DNS address.
+        </li>
+        <li>
+          <strong>Firefox.</strong>
+          <span class="trail"><span>Settings</span><span>Privacy &amp; Security</span><span>DNS over HTTPS</span></span>
+          Choose <em>Max Protection</em>, set the provider to <em>Custom</em>, and enter the secure DNS address.
+        </li>
+      </ol>
+
+      <h3>3. Make it hard to undo</h3>
+      <ol class="steps">
+        <li>
+          <strong>Use a standard account every day.</strong>
+          <span class="trail"><span>Settings</span><span>Accounts</span><span>Other users</span><span>Add account</span></span>
+          Choose to add a user without a Microsoft account. New accounts are standard accounts, which can't change the computer's DNS. Use it for everyday browsing, and keep the administrator account only for changes.
+        </li>
+        <li>
+          <strong>Install Watchword in the new account too.</strong>
+          Each Windows account has its own browsers and extensions, so set Watchword up again there.
+        </li>
+        <li>
+          <strong>Give the administrator password away.</strong>
+          Ideally to someone you trust. If there's no one, keep it written down somewhere inconvenient, away from the computer.
+        </li>
+      </ol>
+      <p class="note">Coming once Watchword is on the Edge store: a setup file for this computer that makes Watchword required in Edge, so it can't be switched off or removed without the administrator password.</p>
+    </section>
+
+    <!-- Android -->
+    <section class="panel" id="panel-android" role="tabpanel" aria-labelledby="tab-android" hidden>
+      <svg class="device" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="56" y="4" width="48" height="92" rx="9" />
+        <rect x="61" y="14" width="38" height="70" rx="2" class="screen" />
+        <path d="M74 9h12" class="lines" />
+        <path d="M67 34h26M67 42h18M67 50h22" class="lines" />
+      </svg>
+
+      <h3>1. Filter the whole phone</h3>
+      <p class="hint">Private DNS covers every app and browser, on Wi-Fi and on mobile data.</p>
+      <ol class="steps">
+        <li>
+          <strong>Find Private DNS.</strong>
+          Open <em>Settings</em> and type <em>Private DNS</em> in the search bar at the top. Menus differ between phone makers; searching finds it on all of them.
+          <span class="trail"><span>Pixel: Network &amp; internet</span><span>Private DNS</span></span>
+          <span class="trail"><span>Samsung: Connections</span><span>More connection settings</span><span>Private DNS</span></span>
+        </li>
+        <li>
+          <strong>Choose a provider name.</strong>
+          Select <em>Private DNS provider hostname</em>.
+        </li>
+        <li>
+          <strong>Enter the filter and save.</strong>
+          Type <code>family.cloudflare-dns.com</code> exactly, then tap <em>Save</em>.
+        </li>
+      </ol>
+
+      <h3>2. Check Chrome</h3>
+      <ol class="steps">
+        <li>
+          <strong>Make Chrome follow the phone's filter.</strong>
+          <span class="trail"><span>Chrome</span><span>Settings</span><span>Privacy and security</span><span>Use secure DNS</span></span>
+          Leave it on your current service provider so Private DNS applies, or choose a custom provider and enter the secure DNS address.
+        </li>
+      </ol>
+      <p class="note">Chrome on Android can't run extensions. Firefox for Android can, and Watchword will come there once it's on Firefox Add-ons. Until then, Private DNS filters every browser on the phone.</p>
+
+      <h3>3. Making it hard to undo</h3>
+      <p class="hint">Android has no built-in lock for your own Private DNS setting, so on your own phone this one stays a speed bump. On a child's phone, Google Family Link lets a parent manage the phone's settings and filter Chrome.</p>
+    </section>
+
+    <!-- iPhone -->
+    <section class="panel" id="panel-iphone" role="tabpanel" aria-labelledby="tab-iphone" hidden>
+      <svg class="device" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="56" y="4" width="48" height="92" rx="11" />
+        <rect x="61" y="12" width="38" height="76" rx="6" class="screen" />
+        <rect x="72" y="15" width="16" height="4" rx="2" class="lines" />
+        <path d="M67 36h26M67 44h18M67 52h22" class="lines" />
+      </svg>
+
+      <h3>1. Filter the whole phone</h3>
+      <p class="hint">Cloudflare's free app covers every app and browser, on Wi-Fi and on mobile data.</p>
+      <ol class="steps">
+        <li>
+          <strong>Install the app.</strong>
+          From the App Store, install <em>1.1.1.1: Faster Internet</em> by Cloudflare.
+        </li>
+        <li>
+          <strong>Choose the family filter.</strong>
+          <span class="trail"><span>Menu</span><span>Advanced</span><span>Connection options</span><span>DNS settings</span></span>
+          Under 1.1.1.1 for Families, choose the option that blocks malware and adult content.
+        </li>
+        <li>
+          <strong>Turn it on.</strong>
+          Switch the app on and allow the profile when the iPhone asks.
+        </li>
+      </ol>
+
+      <h3>2. Limit adult websites</h3>
+      <ol class="steps">
+        <li>
+          <strong>Open Content &amp; Privacy Restrictions.</strong>
+          <span class="trail"><span>Settings</span><span>Screen Time</span><span>Content &amp; Privacy Restrictions</span></span>
+          Turn it on.
+        </li>
+        <li>
+          <strong>Turn on the web limit.</strong>
+          <span class="trail"><span>App Store, Media, Web &amp; Games</span><span>Web Content</span><span>Limit Adult Websites</span></span>
+          On older iPhones the first item is called <em>Content Restrictions</em>. If names look different on yours, search Settings for <em>Web Content</em>.
+        </li>
+        <li>
+          <strong>Stop the filter app being deleted on impulse.</strong>
+          In Content &amp; Privacy Restrictions, find <em>Deleting Apps</em> and set it to <em>Don't Allow</em>. Where it sits varies between iOS versions.
+        </li>
+      </ol>
+
+      <h3>3. Lock it</h3>
+      <ol class="steps">
+        <li>
+          <strong>Set a Screen Time passcode.</strong>
+          <span class="trail"><span>Settings</span><span>Screen Time</span><span>Lock Screen Time Settings</span></span>
+          Use a passcode that's different from the one that unlocks the phone. Best of all, let someone you trust type it, so you never know it.
+        </li>
+      </ol>
+      <p class="note">The passcode can be reset with your Apple Account password, so it's strong friction rather than a wall. It still turns an impulse into a deliberate, slow step.</p>
+    </section>
+
+    <!-- Router -->
+    <section class="panel" id="panel-router" role="tabpanel" aria-labelledby="tab-router" hidden>
+      <svg class="device" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="30" y="52" width="100" height="30" rx="6" />
+        <path d="M54 52V30M106 52V30" />
+        <path d="M44 67h6M58 67h6M72 67h6" class="lines" />
+        <path d="M64 24a22 22 0 0 1 32 0M70 32a12 12 0 0 1 20 0" class="lines" />
+      </svg>
+
+      <h3>Filter every device on your Wi-Fi</h3>
+      <p class="hint">One setting covers every phone, computer, tablet and TV on the home Wi-Fi, including guests' devices.</p>
+      <ol class="steps">
+        <li>
+          <strong>Find the router's address.</strong>
+          It's usually printed on a sticker on the router, often <code>192.168.0.1</code> or <code>192.168.1.1</code>. Type it into the address bar of a browser on a device connected to that Wi-Fi.
+        </li>
+        <li>
+          <strong>Log in.</strong>
+          The password is often on the same sticker.
+        </li>
+        <li>
+          <strong>Find the DNS settings.</strong>
+          Depending on the brand, they're under <em>Internet</em>, <em>WAN</em>, or <em>LAN</em> and <em>DHCP</em>.
+        </li>
+        <li>
+          <strong>Write down what's there now.</strong>
+          Then you can always put it back.
+        </li>
+        <li>
+          <strong>Enter the filter and save.</strong>
+          Enter <code>1.1.1.3</code> and <code>1.0.0.3</code>, and the IPv6 addresses if there are IPv6 fields. Save, and restart the router if it asks.
+        </li>
+        <li>
+          <strong>Change the router's password.</strong>
+          Replace the password from the sticker with a new one, and give it to someone you trust. Otherwise anyone can change the filter back.
+        </li>
+      </ol>
+      <p class="note">Some routers from internet providers don't allow changing DNS. If yours doesn't, the device guides do the same job. Phones on mobile data and browsers with their own secure DNS skip the router, so the other guides still matter.</p>
+    </section>
+
+    <footer class="foot">
+      <p>There's no need to visit a blocked site to test any of this. If you saved the settings, the filter is on.</p>
+    </footer>
+  </main>
+  <script src="guide.js"></script>
+</body>
+</html>
