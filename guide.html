@@ -46,7 +46,7 @@
           <dd><code>family.cloudflare-dns.com</code><button type="button" class="copy" data-copy="family.cloudflare-dns.com">Copy</button></dd>
         </div>
       </dl>
-      <p class="hint small">Using NextDNS instead? Its Setup page shows your own values for each device. Use those wherever a guide says to enter Cloudflare's.</p>
+      <p class="hint small">Using NextDNS instead? Its Setup page shows your own values for each device. Use those wherever a guide says to enter Cloudflare's. NextDNS also lets you block addresses of your own, which the phone guides use for the optional step that turns off GIF search.</p>
     </section>
 
     <nav class="tabs" role="tablist" aria-label="Devices">
@@ -144,7 +144,7 @@
       </svg>
 
       <h3>1. Filter the whole phone</h3>
-      <p class="hint">Private DNS covers every app and browser, on Wi-Fi and on mobile data.</p>
+      <p class="hint">Private DNS covers every app and browser, on Wi-Fi and on mobile data. If you'd also like GIF search in the keyboard off, use NextDNS from step 3 instead.</p>
       <ol class="steps">
         <li>
           <strong>Find Private DNS.</strong>
@@ -170,10 +170,45 @@
           Leave it on your current service provider so Private DNS applies, or choose a custom provider and enter the secure DNS address.
         </li>
       </ol>
-      <p class="note">Chrome on Android can't run extensions. Firefox for Android can, and Watchword will come there once it's on Firefox Add-ons. Until then, Private DNS filters every browser on the phone.</p>
+      <p class="note">Chrome on Android can't run extensions, so Private DNS is what filters it, along with every other browser on the phone.</p>
 
-      <h3>3. Making it hard to undo</h3>
-      <p class="hint">Android has no built-in lock for your own Private DNS setting, so on your own phone this one stays a speed bump. On a child's phone, Google Family Link lets a parent manage the phone's settings and filter Chrome.</p>
+      <h3>3. Optional: turn off GIF search in the keyboard</h3>
+      <p class="hint">Most GIFs are harmless, but GIF search in keyboards like Gboard and Samsung Keyboard, and in apps like WhatsApp, can show some that aren't, and it can't be filtered by word. This step turns GIF search off completely, not just the bad ones. GIFs people send you usually still show, because they arrive with the message. Skip it if GIF search isn't a problem for you.</p>
+      <p class="hint">Cloudflare's filter can't do this, because it doesn't let you add addresses of your own. NextDNS can, and it's free. Its website is easiest to set up on a computer.</p>
+      <ol class="steps">
+        <li>
+          <strong>Make a free NextDNS account.</strong>
+          Sign up at <code>nextdns.io</code>. It makes a filter for you straight away.
+        </li>
+        <li>
+          <strong>Block adult websites.</strong>
+          <span class="trail"><span>Parental Control</span><span>Categories</span></span>
+          Add <em>Porn</em>. On the same page, turn on <em>SafeSearch</em>, <em>YouTube Restricted Mode</em> and <em>Block Bypass Methods</em>.
+        </li>
+        <li>
+          <strong>Block the GIF services.</strong>
+          <span class="trail"><span>Denylist</span></span>
+          Add each of these. Each one also blocks every address under it.
+          <ul class="values domains" aria-label="Addresses to block">
+            <li><code>tenor.com</code><button type="button" class="copy" data-copy="tenor.com">Copy</button></li>
+            <li><code>tenor.co</code><button type="button" class="copy" data-copy="tenor.co">Copy</button></li>
+            <li><code>tenor.googleapis.com</code><button type="button" class="copy" data-copy="tenor.googleapis.com">Copy</button></li>
+            <li><code>giphy.com</code><button type="button" class="copy" data-copy="giphy.com">Copy</button></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Point Private DNS at NextDNS.</strong>
+          On NextDNS's <em>Setup</em> page, copy the Private DNS name shown for Android. Enter it where step 1 says <code>family.cloudflare-dns.com</code>.
+        </li>
+        <li>
+          <strong>Check it with a harmless word.</strong>
+          Open the keyboard's GIF search and search a word you haven't searched there before, like “ball”. If no pictures load, it's blocked. GIFs you've seen before can still show for a while, because the phone has saved them.
+        </li>
+      </ol>
+      <p class="note">The free plan covers 300,000 lookups a month. A busy phone can use that up near the end of the month, and then filtering stops until the 1st. NextDNS's Analytics page shows how fast you're going, and the paid plan has no limit.</p>
+
+      <h3>4. Making it hard to undo</h3>
+      <p class="hint">Android has no built-in lock for your own Private DNS setting, so on your own phone this one stays a speed bump. On a child's phone, Google Family Link lets a parent manage the phone's settings and filter Chrome. If you use NextDNS, let someone you trust change its account password, so the block list can't be edited on impulse.</p>
     </section>
 
     <!-- iPhone -->
@@ -186,7 +221,7 @@
       </svg>
 
       <h3>1. Filter the whole phone</h3>
-      <p class="hint">Cloudflare's free app covers every app and browser, on Wi-Fi and on mobile data.</p>
+      <p class="hint">Cloudflare's free app covers every app and browser, on Wi-Fi and on mobile data. If you'd also like GIF search in Messages off, use NextDNS from step 3 instead.</p>
       <ol class="steps">
         <li>
           <strong>Install the app.</strong>
@@ -221,12 +256,53 @@
         </li>
       </ol>
 
-      <h3>3. Lock it</h3>
+      <h3>3. Optional: turn off GIF search in Messages</h3>
+      <p class="hint">Most GIFs are harmless, but the #images search in Messages can show some that aren't, and it can't be filtered by word. This step turns GIF search off completely, not just the bad ones. GIFs people send you usually still show, because they arrive with the message. Skip it if GIF search isn't a problem for you.</p>
+      <p class="hint">Screen Time and Cloudflare's filter can't do this, because neither lets you add addresses of your own. NextDNS can, and it's free. Its website is easiest to set up on a computer.</p>
+      <ol class="steps">
+        <li>
+          <strong>Make a free NextDNS account.</strong>
+          Sign up at <code>nextdns.io</code>. It makes a filter for you straight away.
+        </li>
+        <li>
+          <strong>Block adult websites.</strong>
+          <span class="trail"><span>Parental Control</span><span>Categories</span></span>
+          Add <em>Porn</em>. On the same page, turn on <em>SafeSearch</em>, <em>YouTube Restricted Mode</em> and <em>Block Bypass Methods</em>.
+        </li>
+        <li>
+          <strong>Block the GIF services.</strong>
+          <span class="trail"><span>Denylist</span></span>
+          Add each of these. Each one also blocks every address under it.
+          <ul class="values domains" aria-label="Addresses to block">
+            <li><code>tenor.com</code><button type="button" class="copy" data-copy="tenor.com">Copy</button></li>
+            <li><code>tenor.co</code><button type="button" class="copy" data-copy="tenor.co">Copy</button></li>
+            <li><code>tenor.googleapis.com</code><button type="button" class="copy" data-copy="tenor.googleapis.com">Copy</button></li>
+            <li><code>giphy.com</code><button type="button" class="copy" data-copy="giphy.com">Copy</button></li>
+            <li><code>cdn2.smoot.apple.com</code><button type="button" class="copy" data-copy="cdn2.smoot.apple.com">Copy</button></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Switch the iPhone to NextDNS.</strong>
+          If you set up Cloudflare's app in step 1, switch it off, because only one filter can run at a time. Then follow the iOS option on NextDNS's <em>Setup</em> page: its app from the App Store, or the profile from <code>apple.nextdns.io</code>. If you use the profile, finish installing it here:
+          <span class="trail"><span>Settings</span><span>General</span><span>VPN &amp; Device Management</span></span>
+        </li>
+        <li>
+          <strong>Check it with a harmless word.</strong>
+          In Messages, tap <em>+</em> and open <em>#images</em> (it may be under <em>More</em>). Search a word you haven't searched there before, like “ball”. Empty gray boxes mean it's blocked. GIFs you've seen before can still show for a while, because the phone has saved them.
+        </li>
+      </ol>
+      <p class="note">The free plan covers 300,000 lookups a month. A busy phone can use that up near the end of the month, and then filtering stops until the 1st. NextDNS's Analytics page shows how fast you're going, and the paid plan has no limit. GIF search in other apps, like WhatsApp, is blocked too.</p>
+
+      <h3>4. Lock it</h3>
       <ol class="steps">
         <li>
           <strong>Set a Screen Time passcode.</strong>
           <span class="trail"><span>Settings</span><span>Screen Time</span><span>Lock Screen Time Settings</span></span>
           Use a passcode that's different from the one that unlocks the phone. Best of all, let someone you trust type it, so you never know it.
+        </li>
+        <li>
+          <strong>Hand over the NextDNS password too.</strong>
+          If you use NextDNS, let the person you trust change its account password, so the block list can't be edited on impulse.
         </li>
       </ol>
       <p class="note">The passcode can be reset with your Apple Account password, so it's strong friction rather than a wall. It still turns an impulse into a deliberate, slow step.</p>

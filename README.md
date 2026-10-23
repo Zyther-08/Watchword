@@ -17,11 +17,20 @@ Closes the tab when someone searches for a word you've blocked, on Google, Bing,
 
 Open the settings by clicking the toolbar icon. The **Try it** box shows exactly what would be caught.
 
-**Protect every device**, linked at the top of the settings page, has step-by-step guides for the rest: filtering the whole Windows computer and its browsers, Android phones, iPhones and the home router, using Cloudflare's free family filter. They're built into Watchword, so they work offline and never send you to a video site.
+**Protect every device**, linked at the top of the settings page, has step-by-step guides for the rest: filtering the whole Windows computer and its browsers, Android phones, iPhones and the home router, using Cloudflare's free family filter, plus optional NextDNS steps that turn off GIF search in Messages and phone keyboards. They're built into Watchword, so they work offline and never send you to a video site.
 
 ---
 
-## Install on Chrome or Edge
+## Install
+
+- **Microsoft Edge:** [Watchword on Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/watchword-search-filter/pipfphkomoddfipkgphhikmehohgmiog)
+- **Firefox:** [Watchword on Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/watchword/)
+
+Store copies update by themselves. To make Watchword work in private windows, open its details on the extensions page and allow it in InPrivate (Edge) or set **Run in Private Windows** to **Allow** (Firefox, under `about:addons`).
+
+The steps below are for running it from the source files instead, for example in Chrome or another Chromium browser.
+
+## Install from source on Chrome or Edge
 
 1. Unzip this folder somewhere it will stay. Right-click the zip, choose **Extract All**, and make sure the path ends in `\watchword` (for example `C:\Users\you\Documents\watchword`), otherwise the files land loose in Documents. If the folder is moved or deleted later, the extension stops working.
 2. Go to `chrome://extensions` (Chrome) or `edge://extensions` (Edge).
@@ -31,7 +40,7 @@ Open the settings by clicking the toolbar icon. The **Try it** box shows exactly
 
 The same steps work in Brave, Opera, Vivaldi and other Chromium browsers.
 
-## Install on Firefox
+## Install from source on Firefox
 
 Firefox only keeps extensions permanently if Mozilla has signed them. Signing is free:
 
@@ -47,7 +56,7 @@ If the settings page shows a banner asking for access, click **Allow access**.
 
 ## Updating to a new version
 
-Your blocked words and settings are kept as long as you don't remove the extension.
+Your blocked words and settings are kept as long as you don't remove the extension. Store copies update by themselves; these steps are for copies installed from source.
 
 - **Chrome or Edge:** extract the new zip into the *same* watchword folder and replace the old files, then click the reload arrow under Watchword on the extensions page.
 - **Firefox:** sign the new version the same way and install the new `.xpi` over the old one. Bump the version number in `manifest.json` first, because Mozilla won't sign the same version twice.

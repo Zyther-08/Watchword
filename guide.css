@@ -111,13 +111,13 @@ code {
   display: grid;
   gap: .9rem;
 }
-.steps li {
+.steps > li {
   counter-increment: step;
   position: relative;
   padding-left: 2.6rem;
   color: var(--slate);
 }
-.steps li::before {
+.steps > li::before {
   content: counter(step);
   position: absolute;
   left: 0;
@@ -160,6 +160,21 @@ code {
   color: var(--slate);
 }
 
+/* Addresses to copy into a filter's block list */
+.domains {
+  list-style: none;
+  margin: .6rem 0 .2rem;
+  padding: .75rem .9rem;
+  gap: .55rem;
+  max-width: 24rem;
+}
+.domains li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
 .note {
   margin: 1.25rem 0 0;
   padding: .8rem 1rem;
@@ -171,6 +186,6 @@ code {
 }
 
 @media (max-width: 520px) {
-  .steps li { padding-left: 2.3rem; }
+  .steps > li { padding-left: 2.3rem; }
   .device { width: 7rem; }
 }
