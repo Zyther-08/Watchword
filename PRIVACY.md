@@ -34,7 +34,7 @@ When SafeSearch is on, Watchword adds the SafeSearch setting to your searches on
 
 ## Device guides
 
-The settings page has guides for protecting other devices with Cloudflare's free family filter. Watchword sends nothing to Cloudflare. If you choose to follow a guide, your device's DNS lookups go to Cloudflare under [Cloudflare's own resolver privacy commitments](https://developers.cloudflare.com/1.1.1.1/privacy/public-dns-resolver/).
+The settings page has guides for protecting other devices with Cloudflare's free family filter, and with NextDNS for blocking GIF search on phones. Watchword sends nothing to either. If you choose to follow a guide, your device's DNS lookups go to that service, under [Cloudflare's resolver privacy commitments](https://developers.cloudflare.com/1.1.1.1/privacy/public-dns-resolver/) or [NextDNS's privacy policy](https://nextdns.io/privacy).
 
 ## Children
 
