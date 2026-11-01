@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stop Watchword being removed</title>
+  <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="guide.css">
+</head>
+<body>
+  <main class="page guide removal-page">
+    <header class="masthead">
+      <img src="icons/icon-128.png" alt="" width="44" height="44">
+      <div>
+        <h1>Stop Watchword being removed</h1>
+        <p class="status">Watchword can close any search, but on its own it can't stop someone removing it.</p>
+      </div>
+    </header>
+
+    <p class="back"><a class="link" href="options.html">Back to Watchword settings</a></p>
+
+    <div class="removal" data-removal role="status" hidden></div>
+
+    <section aria-labelledby="why-h">
+      <h2 id="why-h">Why this matters</h2>
+      <p class="hint">Any browser extension can be removed from the extensions page in two clicks, and browsers don't let an extension prevent it. So in a weak moment, Watchword is only as strong as the urge to remove it. The lock below closes that gap.</p>
+    </section>
+
+    <section aria-labelledby="how-h">
+      <h2 id="how-h">How the lock works</h2>
+      <p class="hint">Windows has settings, made for schools and workplaces, that install an extension and keep it there. With them on, the Remove and Turn off buttons disappear, and Watchword comes back by itself if anything deletes it. The same settings turn off private windows and guest mode, where Watchword can't run.</p>
+      <p class="hint">Whoever has the computer's administrator password can still undo it. That's why the last step gives that password to someone you trust: the person the lock protects shouldn't hold its key.</p>
+    </section>
+
+    <section aria-labelledby="lock-h">
+      <h2 id="lock-h">Lock it in place on Windows</h2>
+      <ol class="steps">
+        <li>
+          <strong>Use the store version.</strong>
+          Install Watchword from your browser's add-on store. Copies loaded from a folder can't be locked, so if you have one, remove it and turn off <em>Developer mode</em>.
+        </li>
+        <li>
+          <strong>Set up the computer's filter first.</strong>
+          Follow the Windows guide in <a class="link" href="guide.html#windows">Protect every device</a> while you're still an administrator. After step 5 it needs the other person's password.
+        </li>
+        <li>
+          <strong>Download the lock files.</strong>
+          They're on Watchword's GitHub page, where anyone can read exactly what they change. Inside are <em>Watchword lock.reg</em>, <em>Watchword unlock.reg</em> and <em>HOW TO USE.txt</em>.
+          <span class="actions"><a class="btn primary" id="lock-download" href="https://github.com/zyther-08/watchword/raw/main/lock/watchword-windows-lock.zip">Download the lock files</a>
+          <a class="link" id="lock-source" href="https://github.com/zyther-08/watchword/tree/main/lock">See what they change</a></span>
+        </li>
+        <li>
+          <strong>Run the lock.</strong>
+          Double-click <em>Watchword lock.reg</em> and click <em>Yes</em>, <em>Yes</em> and <em>OK</em>. Then close the browser completely and open it again. The status at the top of this page should now say Watchword can't be removed.
+        </li>
+        <li>
+          <strong>Hand over the key.</strong>
+          Make a second administrator account for the person you trust, and let them switch your own account to <em>Standard</em>. <em>HOW TO USE.txt</em> walks through it. From then on, undoing the lock needs their password.
+        </li>
+        <li>
+          <strong>Keep the unlock file away from yourself.</strong>
+          Give <em>Watchword unlock.reg</em> to the person you trust, or delete it. It can always be downloaded again, and it needs their password to run.
+        </li>
+      </ol>
+      <p class="note">After locking, the browser says it's “managed by your organization”, and Edge's own secure DNS setting is greyed out. Both are expected: here the organization is you, and the browser uses the computer's DNS filter instead.</p>
+    </section>
+
+    <section aria-labelledby="limits-h">
+      <h2 id="limits-h">What it doesn't cover</h2>
+      <p class="hint"><strong>Other browsers.</strong> The lock covers the browsers Watchword is in. The computer-wide filter from Protect every device covers the rest.</p>
+      <p class="hint"><strong>Phones.</strong> Extensions don't run there, so the phone guides use a DNS filter and Screen Time instead.</p>
+      <p class="hint"><strong>Macs and other computers.</strong> The lock is for Windows only for now.</p>
+    </section>
+
+    <footer class="foot">
+      <p>This page only checks, on this device, how Watchword was installed. Watchword sends nothing anywhere.</p>
+    </footer>
+  </main>
+  <script src="removal.js"></script>
+</body>
+</html>

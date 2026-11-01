@@ -16,6 +16,8 @@
       </div>
     </header>
 
+    <a class="removal" data-removal href="removal.html" hidden></a>
+
     <a class="guide-link" href="guide.html">
       <strong>Protect every device</strong>
       <span>Watchword covers this browser. Step-by-step guides cover the whole computer, your phone and your home Wi-Fi.</span>
@@ -59,9 +61,10 @@
 
     <section class="tester" aria-labelledby="test-h">
       <h2 id="test-h">Try it</h2>
-      <label for="test-input" class="hint">Type a search the way someone might try to sneak it past, or paste a link.</label>
+      <label for="test-input" class="hint">Type a search the way someone might try to sneak it past, or paste a link. If Watchword gets one wrong, you can report it from here.</label>
       <input id="test-input" type="text" autocomplete="off" spellcheck="false" placeholder="b.a.l.l   or   https://www.google.com/search?q=b_all">
       <div id="verdict" class="verdict" aria-live="polite"></div>
+      <div id="report" class="report" hidden></div>
     </section>
 
     <section aria-labelledby="sites-h">
@@ -74,6 +77,18 @@
       </form>
       <p id="site-note" class="form-note" role="status"></p>
       <ul id="site-list" class="chips"></ul>
+    </section>
+
+    <section aria-labelledby="note-h">
+      <h2 id="note-h">A note to yourself</h2>
+      <p class="hint">Write why you set Watchword up, in your own words. When it closes a search, a calm page shows this note instead of leaving you on a blank tab. It stays on this device.</p>
+      <label for="note-input" class="sr-only">Your note</label>
+      <textarea id="note-input" rows="4" maxlength="600" placeholder="Why this matters to you, in your own words"></textarea>
+      <div class="lock-row">
+        <button id="note-save" type="button" class="btn primary">Save note</button>
+        <a class="btn" href="closed.html" target="_blank">See how it looks</a>
+      </div>
+      <p id="note-note" class="form-note" role="status"></p>
     </section>
 
     <section aria-labelledby="help-h">
@@ -113,11 +128,11 @@
         </label>
         <label class="toggle">
           <input type="checkbox" data-opt="safeSearch">
-          <span><strong>Force SafeSearch</strong>Strict SafeSearch on Google, Bing and DuckDuckGo, and Restricted Mode on YouTube.</span>
+          <span><strong>Force SafeSearch</strong>Strict SafeSearch on the big search engines, and Restricted Mode on YouTube.</span>
         </label>
         <label class="toggle">
           <input type="checkbox" data-opt="noImageSearch">
-          <span><strong>Turn off image search</strong>The Images tab on Google, Bing, DuckDuckGo and other search engines goes to the normal results for the same search instead. Pictures on ordinary websites aren't affected. Turning this off needs unlocking, but you can open image search for a short while below.</span>
+          <span><strong>Turn off image search</strong>The Images tab on the big search engines goes to the normal results for the same search instead. Pictures on ordinary websites aren't affected. Turning this off needs unlocking, but you can open image search for a short while below.</span>
         </label>
         <div id="image-pass" class="image-pass" hidden></div>
         <label class="toggle">
@@ -129,6 +144,7 @@
 
     <section aria-labelledby="lock-h">
       <h2 id="lock-h">Lock</h2>
+      <p class="hint">This lock protects your settings. To stop Watchword itself being removed, see <a class="link" href="removal.html">Stop Watchword being removed</a>.</p>
       <div id="lock-area" class="lock-area"></div>
     </section>
 
@@ -140,5 +156,6 @@
   <script src="packs.js"></script>
   <script src="challenge.js"></script>
   <script src="options.js"></script>
+  <script src="removal.js"></script>
 </body>
 </html>

@@ -20,6 +20,39 @@ function getState() {
   return statePromise;
 }
 
+// ---------- Your note ----------
+// If the user wrote a note to themselves, a calm page shows it when a search is closed.
+// One per window: if it's already open, it comes to the front instead of opening again.
+const NOTE_URL = chrome.runtime.getURL('closed.html');
+let noteTabsMemory = {};
+
+async function getNoteTabs() {
+  try { if (chrome.storage.session) return (await chrome.storage.session.get('noteTabs')).noteTabs || {}; } catch (e) { /* no session storage */ }
+  return noteTabsMemory;
+}
+
+async function setNoteTabs(map) {
+  noteTabsMemory = map;
+  try { if (chrome.storage.session) await chrome.storage.session.set({ noteTabs: map }); } catch (e) { /* memory only */ }
+}
+
+async function showNote(windowId) {
+  const map = await getNoteTabs();
+  const existing = map[windowId];
+  if (typeof existing === 'number') {
+    try {
+      const t = await chrome.tabs.get(existing);
+      if (t.windowId === windowId && (!t.url || t.url.startsWith(NOTE_URL))) {
+        await chrome.tabs.update(existing, { active: true });
+        return;
+      }
+    } catch (e) { /* that tab was closed */ }
+  }
+  const tab = await chrome.tabs.create({ windowId, url: NOTE_URL, active: true });
+  map[windowId] = tab.id;
+  await setNoteTabs(map);
+}
+
 // ---------- Closing tabs ----------
 const closing = new Set();
 
@@ -29,8 +62,11 @@ async function closeTab(tabId) {
   setTimeout(() => closing.delete(tabId), 3000);
   try {
     const { settings } = await getState();
-    if (settings.options.keepWindow) {
-      const tab = await chrome.tabs.get(tabId);
+    const tab = await chrome.tabs.get(tabId);
+    if (settings.note.trim()) {
+      // Opened before the tab closes, so the window never empties.
+      await showNote(tab.windowId);
+    } else if (settings.options.keepWindow) {
       const tabsInWindow = await chrome.tabs.query({ windowId: tab.windowId });
       if (tabsInWindow.length <= 1) await chrome.tabs.create({ windowId: tab.windowId });
     }

@@ -13,11 +13,15 @@ Closes the tab when someone searches for a word you've blocked, on Google, Bing,
 - **Optional lock**, in one of two ways. Once locked, nobody can remove blocked words or sites, turn off ≈, or switch off a protection without unlocking; adding new words and sites always works.
   - **Typing challenge (to lock yourself):** unlocking means typing about 10, 20 or 30 minutes of fresh random text by hand, in one sitting. Pasting doesn't work, the text is new every time, and a minute without typing (or leaving the page) starts over. There's nothing to write down or keep, so there's no way to let yourself back in early.
   - **Password (only if someone else holds it):** use this only when a person you trust sets and keeps the password, so you never know it. A password you set yourself isn't a real lock, since you could copy it or undo it and use it in a weak moment.
+- **A note to yourself**: write down why you set Watchword up. When it closes a search, a calm page shows your own words instead of leaving you on a blank tab.
+- **Report a wrong result** from the Try it box: it opens your own email with the search filled in, so missed searches and wrong blocks can be fixed for everyone. Nothing is sent unless you send it.
 - Free, no account, nothing sent anywhere. See the [privacy policy](PRIVACY.md).
 
 Open the settings by clicking the toolbar icon. The **Try it** box shows exactly what would be caught.
 
 **Protect every device**, linked at the top of the settings page, has step-by-step guides for the rest: filtering the whole Windows computer and its browsers, Android phones, iPhones and the home router, using Cloudflare's free family filter, plus optional NextDNS steps that turn off GIF search in Messages and phone keyboards. They're built into Watchword, so they work offline and never send you to a video site.
+
+**Stop Watchword being removed**, at the very top of the settings page, tells you whether Watchword can be removed right now. On Windows it walks you through locking it in place with the files in the [lock folder](lock/), so the Remove button disappears and the key goes to someone you trust.
 
 ---
 
@@ -65,7 +69,7 @@ Your blocked words and settings are kept as long as you don't remove the extensi
 
 ## Good to know
 
-**It's a speed bump, not a wall.** Any browser extension can be switched off from the extensions page, and a different browser won't have it at all. For stronger protection, add one of these as well:
+**On its own, it's a speed bump, not a wall.** Any browser extension can be removed from the extensions page in two clicks, and a different browser won't have it at all. On Windows, the [lock files](lock/) keep Watchword installed in Edge and Firefox. For everything else, add one of these as well:
 
 - **A family DNS filter**, which blocks adult and malicious sites for every browser and app. Cloudflare's is free: set the browser's *secure DNS* setting to `https://family.cloudflare-dns.com/dns-query`, or set the computer's or router's DNS to `1.1.1.3` and `1.0.0.3`. Doing it on the router covers every device on the network.
 - **The browser's built-in malware protection**, which is on by default: Microsoft Defender SmartScreen in Edge, Safe Browsing in Chrome, and "Block dangerous and deceptive content" in Firefox.

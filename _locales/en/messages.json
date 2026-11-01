@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Watchword: Search Filter",
+    "description": "Extension name shown in the browser and the stores."
+  },
+  "extShortName": {
+    "message": "Watchword",
+    "description": "Short name for tight spaces."
+  },
+  "extDescription": {
+    "message": "Blocks porn searches and any word you choose. Closes the tab the moment it's searched, even disguised as b.a.l.l or b_all.",
+    "description": "Short description, 132 characters or fewer."
+  }
+}

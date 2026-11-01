@@ -17,7 +17,9 @@
   const sites = defaults.flatMap(p => p.sites || []);
   const settings = { words, sites, options: SG.DEFAULT_OPTIONS };
   const compiled = SG.compileWords(words);
-  const blocked = text => !!SG.findBlocked(text, compiled, settings.options, true);
+  // Checked the way the extension checks a search: with the fixed help and everyday phrases.
+  const excused = SG.helpCompiled(settings.options);
+  const blocked = text => !!SG.findBlocked(text, compiled, settings.options, true, excused);
 
   const LEET = { a: '4', e: '3', o: '0', s: '5', i: '1' };
   function disguises(word) {
@@ -71,7 +73,13 @@
     'slim thin', 'curvy road', 'she cooked up a plan', 'girl thick hair',
     'spicy chicken wings', 'steamy shower', 'lemon cake recipe', 'lime juice', 'harley quinn', 'dipsea trail', 'dirty laundry',
     'the dirty story of oil', 'monster trucks', 'romance novels', 'manga recommendations', 'zimní bunda', 'resep bunda',
-    'bunda dan anak', 'eat bundt cake', 'her bundle', 'exotisk frukt', 'omega 3 fish oil'
+    'bunda dan anak', 'eat bundt cake', 'her bundle', 'exotisk frukt', 'omega 3 fish oil',
+    'cinnamon buns', 'space buns hairstyle', 'put her hair in two buns', 'soft buns recipe', 'dog humping my leg',
+    'why do dogs hump', 'hump day', 'my humps lyrics', 'how should glasses sit on your face', 'where should glasses sit on face',
+    'sunglasses that sit on your face', 'why does my cat sit on my face', 'my cat sat on my face', 'moby dick on her shelf',
+    'cat rubbing against her legs', 'selfie stick', 'candy crush', 'crush on her', 'best pixar moms', 'pixar mom costume',
+    'gym girl workout plan', 'girls gym near me', 'disney mom shirt', 'disney mom womens shirt', 'disney mom gym shirt',
+    'pixar mom womens costume', 'pixar body proportions', 'mom bod workout', 'elastigirl costume', 'gym crush quotes'
   ];
 
   // Disguises people have actually tried; kept here so they're re-checked on every run.
@@ -81,7 +89,10 @@
     'her juic.y ahh', 'smellin.g her ahh leggings', 'eating her bu.m', 'her ahhhh', 'juicy a h h', 'thicc b00ty', 'eat @ss',
     'smelling her a.s', 'eating her bu.t', 'her b.o.t.y', 'eat a_s', 'jack o.f',
     'caked up gurl', 'caked-up gurls', 'cakedup gurl', "she's caked up", 'th1cc gurls', 'c.a.k.e.d up girl', 'slim-thick',
-    'thicc gurl', 'her bunda', 'her b.u.n.d.a', 'spicy b00ks', 'lemon fan fic', 'spicy booktok reads', 'omegavers', 'erotiska noveller'];
+    'thicc gurl', 'her bunda', 'her b.u.n.d.a', 'spicy b00ks', 'lemon fan fic', 'spicy booktok reads', 'omegavers', 'erotiska noveller',
+    'belfie', 'b3lfies', 'butt crush', 'buttcrushing', 'her buns', 'her juicy buns', 'sn1ffing her buns', 'sit on my face',
+    'sitting on his face', 's1t on f4ce', 'girl humping', 'she humps', 'rubbing penis against her leg', 'grinding p3nis on her', 'pixar mom body', 'pixar mom gym girl', 'p1xar mom physique', 'pixar moms thighs', 'pixar mum figure',
+    'built like a pixar mom', 'elastigirl thighs', 'gym girls thighs', 'disney mom curves'];
 
   const ENGINES = [
     ['Google', 'https://www.google.com/search?q='],

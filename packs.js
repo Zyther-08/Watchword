@@ -11,6 +11,10 @@
 // their own: "bunda" is also Indonesian for mother and Czech for jacket.
 const BODY = ['ass', 'ahh', 'booty', 'butt', 'bum', 'bunda', 'culo'];
 const combos = (firsts, seconds) => firsts.flatMap(a => seconds.map(b => `+${a} ${b}`));
+const PIXAR_MOMS = ['pixar mom', 'pixar moms', 'pixar mum', 'pixar mums', 'pixar mommy'];
+const BODY_SHAPE = ['body', 'bodies', 'bod', 'physique', 'figure', 'curves', 'curvy', 'thighs', 'hips', 'waist', 'proportions',
+  'thick', 'thicc', 'booty', 'butt', 'ass'];
+const GYM_GIRLS = ['gym girl', 'gym girls', 'gym baddie', 'gym baddies', 'fitness girl', 'fitness girls', 'gym woman', 'gym women'];
 // Body-shape slang is only caught next to a word for a person ("caked up gurl", "thicc women"),
 // never on its own: makeup, mud and snow get "caked up" too. Not "gal", which also catches "gall".
 const PEOPLE = ['girl', 'gurl', 'woman', 'women', 'lady', 'ladies', 'chick', 'babe', 'wife'];
@@ -20,10 +24,34 @@ const BODY_SLANG = [
   '+slim thick', '+she caked up', '+shes caked up',
   // Not "her butt" or "her bum" on their own: parents search "rash on her bum".
   ...combos(['her'], ['ass', 'ahh', 'booty', 'bunda', 'culo']),
-  '+big booty', '+fat booty', '+nice ass', '+bubble butt'
+  '+big booty', '+fat booty', '+nice ass', '+bubble butt',
+  // "Buns" only after "her": cinnamon, burger and hair buns are everyday searches.
+  '+her buns', ...['juicy', 'thick', 'thicc', 'phat', 'big', 'fat', 'soft', 'round', 'nice', 'tight', 'jiggly', 'huge']
+    .map(a => `+her ${a} buns`), '+thicc buns', '+phat buns',
+  // Cartoon-mom body-type memes ("Pixar mom body"), only next to a body word: "best Pixar moms" and
+  // "cartoon mom costume" are everyday searches. The plain phrases are in the suggestive pack.
+  ...combos(PIXAR_MOMS, [...BODY_SHAPE, 'build', 'built', 'shape', 'shaped', 'legs', 'girl', 'gf', 'girlfriend', 'type girl',
+    'gym']),
+  // "Disney mom" is also a fan of Disney ("Disney mom shirt", "Disney mom women's tee"), so only pure body words.
+  ...combos(['disney mom', 'disney moms', 'cartoon mom', 'cartoon moms'], BODY_SHAPE),
+  ...combos(['built like a', 'built like', 'curvy', 'thick', 'thicc', 'gym girl', 'gym girls'], ['pixar mom', 'disney mom', 'cartoon mom']),
+  ...combos(['elastigirl', 'helen parr', 'mrs incredible'], ['body', 'thighs', 'curves', 'hips', 'figure', 'legs', 'feet', 'thick', 'thicc', 'booty', 'butt', 'ass']),
+  // Gym and fitness girls next to a body-part word. "Gym girl body" is also fitness inspiration,
+  // so that and the plain phrases are in the suggestive pack.
+  ...combos(GYM_GIRLS, ['curves', 'curvy', 'thighs', 'hips', 'thick', 'thicc', 'booty', 'butt', 'ass', 'pixar mom'])
 ];
 const BODY_VERBS = ['eat', 'eating', 'ate', 'lick', 'licking', 'sniff', 'sniffing', 'smell', 'smelling'];
 const BODY_ACTS = [...combos(BODY_VERBS, BODY), ...combos(BODY_VERBS.map(v => v + ' her'), [...BODY, 'feet'])];
+// Acts that are only explicit as phrases. "Humping" alone is everyday (dogs), so only next to a
+// person; the bare word is in the everyday pack. Anatomy words only next to "against her" and similar.
+const PEOPLE_ALL = [...PEOPLE, 'girls', 'gurls', 'chicks', 'babes', 'wives', 'her', 'she', 'shes'];
+const PHRASE_ACTS = [
+  ...combos(['sit on', 'sits on', 'sitting on', 'sat on'], ['face', 'my face', 'his face', 'her face', 'your face']),
+  ...combos(PEOPLE_ALL, ['humping', 'humps', 'humped']), '+pillow humping',
+  ...combos(['penis', 'cock'], ['against her', 'on her', 'between her', 'inside her', 'in her']),
+  // "dick" is also a name (Moby Dick), so only in phrases no title uses.
+  ...combos(['dick'], ['against her', 'between her', 'inside her'])
+];
 // Written and audio erotica is often searched with softer words: "spicy" and "steamy" books,
 // "lemon" fan fiction. Only as phrases: "spicy chicken", "steamy shower" and "lemon cake" stay open.
 const READING = ['romance', 'book', 'scene', 'chapter', 'fanfic', 'fanfiction', 'fic', 'fiction', 'manhwa', 'manga',
@@ -55,7 +83,7 @@ globalThis.WORD_PACKS = [
     words: ['~blow job', '~hand job', '~foot job', '~tit job', '~rim job', '~cum shot', '~creampie', '~deep throat',
       '~gang bang', '~bukkake', '~orgy', '~orgies', 'threesome', 'fisting', 'squirting', '~face sitting',
       '~doggy style', '+sex position', '~masturbate', '~masturbating', 'masturbation', 'masterbate', 'masterbation', 'mastrubation', '~jerk off', '~jack off',
-      '~fap', '~jizz', '+step sis', ...BODY_ACTS]
+      '~fap', '~jizz', '+step sis', ...BODY_ACTS, ...PHRASE_ACTS]
   },
   {
     id: 'kinks',
@@ -64,7 +92,7 @@ globalThis.WORD_PACKS = [
     checked: true,
     words: ['~fetish', 'kinky', '~bdsm', 'bondage', '~femdom', 'findom', '~dominatrix', '~cuckold', 'spank',
       'spanking', '~voyeur', '~upskirt', '~down blouse', '~golden shower', '~feet pics', '~ahegao', '~futanari',
-      '~ecchi', '~yaoi', '~milf', '~dilf', '~gilf', '~pawg', '~bbw']
+      '~ecchi', '~yaoi', '~milf', '~dilf', '~gilf', '~pawg', '~bbw', '+butt crush', '+butt crushing']
   },
   {
     id: 'stories',
@@ -80,7 +108,7 @@ globalThis.WORD_PACKS = [
     about: 'Slang that is almost never used innocently, including phrases like “juicy ahh”, “her booty” and “caked up girl”.',
     checked: true,
     words: ['~boob', 'boobie', 'titty', '~titties', '~tiddies', '~butthole', '~ass hole', '~ass hol', '~camel toe', 'boner', '~schlong',
-      '~ballsack', '~nutsack', '~twat', '~cunt', '~clit', '~coochie', '~punani', 'vag', ...BODY_SLANG]
+      '~ballsack', '~nutsack', '~twat', '~cunt', '~clit', '~coochie', '~punani', 'vag', 'belfie', ...BODY_SLANG]
   },
   {
     id: 'sites',
@@ -105,7 +133,8 @@ globalThis.WORD_PACKS = [
       '~instagram model', '~gravure', ...combos(['curvy'], PEOPLE),
       'shirtless', '+hot guy', '+hot men', '+asmr boyfriend', '+boyfriend asmr', '+asmr girlfriend', '+girlfriend asmr',
       '+boyfriend roleplay', '+girlfriend roleplay', '+asmr kissing', '+kissing asmr', '+kissing scene', '+kiss scene',
-      '+x reader', '+dark romance', '+reverse harem', '+book boyfriend']
+      '+x reader', '+dark romance', '+reverse harem', '+book boyfriend', '+pixar mom', '+pixar mum', '+pixar mommy', '+gym girl', '+gym baddie',
+      ...combos(GYM_GIRLS, ['body', 'physique', 'figure', 'legs'])]
   },
   {
     id: 'everyday',
@@ -114,7 +143,7 @@ globalThis.WORD_PACKS = [
     checked: false,
     warn: true,
     words: ['~sex', 'ass', 'anal', '~cum', '~cock', '~dick', 'pussy', '~tits', 'penis', 'vagina', '~vulva',
-      '~genitals', 'breasts', '~nipple', '~clitoris', 'erection', '~kink', '~pegging', 'stripper', '~ahh']
+      '~genitals', 'breasts', '~nipple', '~clitoris', 'erection', '~kink', '~pegging', 'stripper', '~ahh', 'humping']
   }
 ];
 

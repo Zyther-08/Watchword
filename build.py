@@ -7,7 +7,7 @@
 import json, os, zipfile
 
 FILES = ['core.js', 'packs.js', 'challenge.js', 'background.js', 'content.js', 'options.html', 'options.css',
-         'options.js', 'guide.html', 'guide.css', 'guide.js', 'README.md', 'LICENSE', 'PRIVACY.md',
+         'options.js', 'guide.html', 'guide.css', 'guide.js', 'removal.html', 'removal.js', 'closed.html', 'closed.js', 'README.md', 'LICENSE', 'PRIVACY.md',
          '_locales/en/messages.json', 'icons/icon-16.png', 'icons/icon-32.png', 'icons/icon-48.png', 'icons/icon-128.png']
 here = os.path.dirname(os.path.abspath(__file__))
 manifest = json.load(open(os.path.join(here, 'manifest.json'), encoding='utf-8'))

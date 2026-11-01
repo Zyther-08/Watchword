@@ -343,12 +343,59 @@ function highlighted(hit) {
   );
 }
 
+// ---------- Report a wrong result ----------
+// Opens the user's own email app with the search filled in. Nothing is sent unless they send it.
+const REPORT_EMAIL = 'watchword_help@protonmail.com';
+
+function browserName() {
+  const ua = navigator.userAgent;
+  if (/Edg\//.test(ua)) return 'Edge';
+  if (/Firefox\//.test(ua)) return 'Firefox';
+  if (/OPR\//.test(ua)) return 'Opera';
+  if (navigator.brave) return 'Brave';
+  if (/Chrome\//.test(ua)) return 'Chrome';
+  return 'another browser';
+}
+
+function showReport(value, closes) {
+  const box = $('report');
+  const subject = closes ? 'Watchword: closed by mistake' : 'Watchword: missed search';
+  const body = [
+    `What I searched: ${value}`,
+    `Watchword: ${closes ? 'closed the tab' : 'let it through'}`,
+    `It should: ${closes ? 'stay open' : 'close'}`,
+    `Version: Watchword ${chrome.runtime.getManifest().version} in ${browserName()}`,
+    '',
+    'Anything else (optional):',
+    ''
+  ].join('\n');
+  const href = `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const copied = h('span', { class: 'report-small', role: 'status' });
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(`To: ${REPORT_EMAIL}\nSubject: ${subject}\n\n${body}`);
+      copied.textContent = `Copied. Paste it into an email to ${REPORT_EMAIL}.`;
+    } catch (e) {
+      copied.textContent = `Couldn't copy. Email ${REPORT_EMAIL} instead.`;
+    }
+  };
+  box.replaceChildren(
+    h('p', {}, closes ? 'Should this stay open? ' : 'Should this have closed? ', 'Let the Watchword Project know, so the word lists get better for everyone.'),
+    h('div', { class: 'report-actions' },
+      h('a', { class: 'btn', id: 'report-mail', href }, 'Report it by email'),
+      h('button', { type: 'button', class: 'link', id: 'report-copy', onclick: copy }, 'Copy the report instead'),
+      copied),
+    h('p', { class: 'report-small' }, 'This opens your own email with the search filled in. Nothing is sent unless you send it.'));
+  box.hidden = false;
+}
+
 function runTest() {
   const out = $('verdict');
   const panel = document.querySelector('.tester');
   out.replaceChildren();
   out.className = 'verdict';
   panel.classList.remove('is-blocked');
+  $('report').hidden = true;
 
   const value = $('test-input').value.trim();
   if (!value) {
@@ -362,10 +409,12 @@ function runTest() {
     out.classList.add('blocked');
     panel.classList.add('is-blocked');
     out.append(h('p', { class: 'headline' }, 'Tab closes'), h('p', { class: 'detail' }, detail));
+    showReport(value, true);
   };
   const allowed = (detail) => {
     out.classList.add('allowed');
     out.append(h('p', { class: 'headline' }, 'Allowed'), h('p', { class: 'detail' }, detail));
+    showReport(value, false);
   };
 
   const isLink = /^[a-z][a-z0-9+.-]*:\/\//i.test(value) || /^www\./i.test(value);
@@ -397,7 +446,10 @@ function runTest() {
   } else {
     const phrase = SG.findAllowed(value, allowedCompiled, settings.options);
     const excused = phrase && SG.findBlocked(value, compiled, settings.options, true);
-    allowed(excused ? `“${phrase}” is on the help list, so this gets through.` : 'No blocked words in this.');
+    const onHelpList = excused && SG.HELP_PHRASES.includes(phrase);
+    allowed(!excused ? 'No blocked words in this.'
+      : onHelpList ? `“${phrase}” is on the help list, so this gets through.`
+      : `“${phrase}” is an everyday phrase, so this stays open.`);
   }
 }
 $('test-input').addEventListener('input', runTest);
@@ -653,8 +705,25 @@ function renderStatus() {
   $('status').textContent = text;
 }
 
+// ---------- A note to yourself ----------
+function renderNote() {
+  const input = $('note-input');
+  if (document.activeElement !== input) input.value = settings.note || '';
+}
+
+async function saveNote() {
+  const text = $('note-input').value.trim().slice(0, SG.NOTE_MAX);
+  if (text === (settings.note || '')) { note('note-note', text ? 'Saved.' : ''); return; }
+  // Removing the note while locked needs unlocking, like switching off a protection.
+  if (!text && settings.note && needsUnlock()) { $('note-input').value = settings.note; return; }
+  settings.note = text;
+  await save();
+  note('note-note', text ? 'Saved. It shows whenever Watchword closes a search.' : 'Note removed.');
+}
+
 function render() {
   renderStatus();
+  renderNote();
   if (!$('packs').hidden) renderPacks();
   renderWords();
   renderSites();
@@ -687,6 +756,8 @@ chrome.storage.onChanged.addListener((changes, area) => {
   settings = incoming;
   render();
 });
+
+$('note-save').addEventListener('click', saveNote);
 
 (async () => {
   settings = await SG.loadSettings();

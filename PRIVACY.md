@@ -16,6 +16,7 @@ These are saved in your browser's extension storage, on your own computer only:
 - your settings (for example SafeSearch, typing detection and image search)
 - the lock, if you set one: either the length of the typing challenge, or a password stored only as a salted hash (the password itself is never saved)
 - the end time of a 10-minute image search pass, while one is running
+- your note to yourself, if you write one, which is shown on your own screen when a search is closed
 
 They are not synced to other devices or sent anywhere. Removing Watchword from your browser deletes them.
 
@@ -28,9 +29,13 @@ To do its job, Watchword checks two things against your blocked words, on your o
 
 Nothing is recorded, saved or sent. Watchword doesn't read the rest of the pages you visit.
 
+## Reporting a search
+
+The settings page lets you report a search Watchword got wrong. It opens your own email app with the search filled in, addressed to the Watchword Project. Nothing is sent unless you send that email yourself. Watchword itself still sends nothing.
+
 ## SafeSearch
 
-When SafeSearch is on, Watchword adds the SafeSearch setting to your searches on Google, Bing and DuckDuckGo, and Restricted Mode to YouTube. It does this with fixed browser rules. It doesn't read, log or change your requests in any other way.
+When SafeSearch is on, Watchword adds the SafeSearch setting to your searches on the big search engines, and Restricted Mode to YouTube. It does this with fixed browser rules. It doesn't read, log or change your requests in any other way.
 
 ## Device guides
 

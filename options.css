@@ -84,7 +84,7 @@ h2 {
   white-space: nowrap;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], textarea {
   width: 100%;
   font: inherit;
   color: var(--ink);
@@ -93,7 +93,8 @@ input[type="text"], input[type="password"] {
   border-radius: 8px;
   padding: .65rem .8rem;
 }
-input[type="text"]:focus-visible, input[type="password"]:focus-visible {
+textarea { display: block; resize: vertical; min-height: 6rem; line-height: 1.5; margin-bottom: .6rem; }
+input[type="text"]:focus-visible, input[type="password"]:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--pine);
   outline-offset: 1px;
   border-color: transparent;
@@ -113,6 +114,7 @@ input[type="text"]:focus-visible, input[type="password"]:focus-visible {
   color: var(--ink);
   white-space: nowrap;
 }
+a.btn { display: inline-block; text-decoration: none; }
 .btn.primary { background: var(--pine); border-color: var(--pine); color: #fff; }
 @media (prefers-color-scheme: dark) { .btn.primary { color: #0e1e19; } }
 .btn.danger { color: var(--brick); }
@@ -376,6 +378,55 @@ input[type="text"]:focus-visible, input[type="password"]:focus-visible {
 .guide-link strong { display: block; color: var(--pine); font-weight: 650; }
 .guide-link:hover { border-color: var(--pine); }
 .guide-link:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+
+/* Whether Watchword can be removed: top of the settings page and the removal page */
+.removal {
+  display: block;
+  margin: -.5rem 0 1rem;
+  padding: .9rem 1.1rem;
+  background: var(--brick-soft);
+  border: 1px solid var(--brick-soft);
+  border-left: 6px solid var(--brick);
+  border-radius: 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.removal strong { display: block; color: var(--brick); font-weight: 650; }
+.removal .more { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.removal.locked { background: var(--paper); border-color: var(--line); border-left-color: var(--pine); }
+.removal.locked strong { color: var(--pine); }
+a.removal:hover { border-color: var(--brick); }
+a.removal.locked:hover { border-color: var(--pine); }
+a.removal:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+.removal + .guide-link { margin-top: 0; }
+.removal-page .removal { margin: 0 0 .5rem; }
+.removal-page .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.1rem; margin-top: .6rem; }
+.removal-page .actions .btn { text-decoration: none; }
+
+/* Report a wrong result, under Try it */
+.report { margin-top: .9rem; padding-top: .8rem; border-top: 1px solid var(--line); color: var(--slate); }
+.report p { margin: 0; }
+.report .report-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-top: .45rem; }
+.report .report-actions .btn { text-decoration: none; padding: .45rem .9rem; font-size: .95rem; }
+.report .report-small { font-size: .9rem; margin-top: .45rem; }
+
+/* The page shown when a search is closed: the user's own note, nothing else */
+.closed-body { min-height: 100vh; display: grid; place-items: center; }
+.closed { max-width: 36rem; padding: 3rem 1.5rem; text-align: center; }
+.closed img { border-radius: 11px; }
+.closed-kicker { margin: 1rem 0 0; font-size: 1rem; font-weight: 600; letter-spacing: .01em; color: var(--slate); }
+.closed-note {
+  margin: 1.75rem 0 0;
+  font-size: clamp(1.35rem, 1.1rem + 1.2vw, 1.85rem);
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+.closed-empty { margin: 1.5rem 0 0; color: var(--slate); }
+.closed-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; margin-top: 2.25rem; }
 
 /* Short image search pass */
 .image-pass {

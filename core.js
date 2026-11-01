@@ -25,6 +25,15 @@
   const HELP_PHRASES = ['quit porn', 'stop watching porn', 'porn addiction', 'porn recovery', 'sex addiction',
     'sex education', 'masturbation addiction', 'stop masturbating', 'quit masturbating'];
 
+  // Everyday phrases that contain a pack phrase without being explicit: "how should glasses sit on
+  // your face", "my cat sat on my face". Always on and fixed, like the help list, and they only
+  // excuse the words inside them. Objects and cats only: no people or other animals, so the list
+  // can't be turned into a way around the packs.
+  const EVERYDAY_SUBJECTS = ['glasses', 'sunglasses', 'eyeglasses', 'frames', 'goggles', 'mask', 'masks', 'cat', 'cats', 'kitten'];
+  const EVERYDAY_PHRASES = EVERYDAY_SUBJECTS.flatMap(who => ['', 'that ', 'should '].flatMap(link =>
+    ['sit on', 'sits on', 'sitting on', 'sat on'].flatMap(verb =>
+      ['face', 'my face', 'your face', 'his face', 'her face'].map(face => `${who} ${link}${verb} ${face}`))));
+
   // Options that let more through while ON. Turning one ON needs unlocking.
   // Nothing here now: the help list is fixed and safe, so it can be turned on and off freely.
   const LOOSENING_OPTIONS = [];
@@ -108,13 +117,17 @@
     }
   }
 
+  // The user's note to themselves, shown when a search is closed. Stays on this device.
+  const NOTE_MAX = 600;
+
   function mergeSettings(raw) {
     const s = raw && typeof raw === 'object' ? raw : {};
     return {
       words: Array.isArray(s.words) ? s.words.filter(w => typeof w === 'string') : [],
       sites: Array.isArray(s.sites) ? s.sites.filter(w => typeof w === 'string') : [],
       options: Object.assign({}, DEFAULT_OPTIONS, s.options),
-      lock: validLock(s.lock)
+      lock: validLock(s.lock),
+      note: typeof s.note === 'string' ? s.note.slice(0, NOTE_MAX) : ''
     };
   }
 
@@ -427,11 +440,14 @@
   // Allowed phrases: "quit porn" lets "how to quit porn" through. Only the blocked
   // word inside the allowed phrase is excused; any other blocked word still counts.
   // ---------------------------------------------------------------------------
-  // The fixed help list, compiled, when the option is on.
-  let helpCache = null;
+  // The fixed everyday list, plus the help list when that option is on.
+  let helpCache = null, everydayCache = null;
   function helpCompiled(options) {
-    if (!options || options.helpPhrases === false) return null;
-    if (!helpCache) helpCache = compileAllowed(HELP_PHRASES);
+    if (!options || options.helpPhrases === false) {
+      if (!everydayCache) everydayCache = compileAllowed(EVERYDAY_PHRASES);
+      return everydayCache;
+    }
+    if (!helpCache) helpCache = compileAllowed([...HELP_PHRASES, ...EVERYDAY_PHRASES]);
     return helpCache;
   }
 
@@ -509,9 +525,33 @@
   }
 
   function searchChars(chars, compiled, o, endIsBoundary, allowedCompiled, typing) {
+    // Most searches contain no blocked word at all, so look for one first, and only build the
+    // allowed-phrase mask (help and everyday lists) when there's a hit it might excuse.
+    // The mask can only remove hits, so skipping it when there are none changes nothing.
+    if (allowedCompiled && allowedCompiled.length && !searchWith(chars, compiled, o, endIsBoundary, null, null, false)) return null;
     // An allowed phrase counts as soon as it's fully typed.
     const mask = allowedMask(chars, allowedCompiled, o, true);
+    return searchWith(chars, compiled, o, endIsBoundary, mask, allowedCompiled, typing);
+  }
+
+  // A blocked word's first letter has to be in the search, at the start of a word: only later
+  // letters can be misspelled (see matchOne). So any word whose first letter (or a stand-in like
+  // 4 for a) starts no word in the search can be skipped without changing the result.
+  function wordStartLetters(chars, o) {
+    const letters = new Set();
+    for (let i = 0; i < chars.length; i++) {
+      if (!startsWord(chars, i)) continue;
+      const c = chars[i];
+      letters.add(c);
+      if (o.leet && LEET[c] !== undefined) for (const l of LEET[c]) letters.add(l);
+    }
+    return letters;
+  }
+
+  function searchWith(chars, compiled, o, endIsBoundary, mask, allowedCompiled, typing) {
+    const starts = wordStartLetters(chars, o);
     for (const kw of compiled) {
+      if (!starts.has(kw.letters[0])) continue;
       let from = 0;
       for (;;) {
         const hit = matchOne(chars, kw, o, endIsBoundary, from, mask);
@@ -660,6 +700,7 @@
     IMAGE_PASS_WAIT_SECONDS,
     mergeSettings,
     loadSettings,
+    NOTE_MAX,
     normalize,
     parseWord,
     typoBudget,
