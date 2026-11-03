@@ -79,7 +79,12 @@
     'sunglasses that sit on your face', 'why does my cat sit on my face', 'my cat sat on my face', 'moby dick on her shelf',
     'cat rubbing against her legs', 'selfie stick', 'candy crush', 'crush on her', 'best pixar moms', 'pixar mom costume',
     'gym girl workout plan', 'girls gym near me', 'disney mom shirt', 'disney mom womens shirt', 'disney mom gym shirt',
-    'pixar mom womens costume', 'pixar body proportions', 'mom bod workout', 'elastigirl costume', 'gym crush quotes'
+    'pixar mom womens costume', 'pixar body proportions', 'mom bod workout', 'elastigirl costume', 'gym crush quotes',
+    'dog licking feet', 'dog sniffing socks', 'det vore bra', 'vore det möjligt', 'mixed age play', 'pork belly stuffing',
+    'norse giantess skadi', 'kink in neck', 'garden hose kink', 'big ass fans', 'cinnamon buns in the oven', 'baby feet on my face',
+    'my brother farted on my face', 'pregnant woman farting a lot', 'leggings for gym', 'yoga pants for women', 'latex gloves',
+    'cbt therapy', 'inflation rate', 'puppy play biting', 'smelly feet remedy', 'praise and worship songs', 'crowd trampling news',
+    'foot smoother', 'face smoother cream', 'butt smoother', 'squeeze butt exercise', 'smelling her perfume'
   ];
 
   // Disguises people have actually tried; kept here so they're re-checked on every run.
@@ -92,7 +97,9 @@
     'thicc gurl', 'her bunda', 'her b.u.n.d.a', 'spicy b00ks', 'lemon fan fic', 'spicy booktok reads', 'omegavers', 'erotiska noveller',
     'belfie', 'b3lfies', 'butt crush', 'buttcrushing', 'her buns', 'her juicy buns', 'sn1ffing her buns', 'sit on my face',
     'sitting on his face', 's1t on f4ce', 'girl humping', 'she humps', 'rubbing penis against her leg', 'grinding p3nis on her', 'pixar mom body', 'pixar mom gym girl', 'p1xar mom physique', 'pixar moms thighs', 'pixar mum figure',
-    'built like a pixar mom', 'elastigirl thighs', 'gym girls thighs', 'disney mom curves'];
+    'built like a pixar mom', 'elastigirl thighs', 'gym girls thighs', 'disney mom curves',
+    'her curvy buns', 'her curvy buns in gym clothes', 'buns on face', 'face f4rt', 'feet on his face', 'f00t worship',
+    'giantess feet', 'mommy k1nk', 'booty in leggings', 'her round b00ty'];
 
   const ENGINES = [
     ['Google', 'https://www.google.com/search?q='],
@@ -102,54 +109,70 @@
   ];
 
   const checks = []; // { group, label, text, want, got }
-  const add = (group, label, text, want, got) => checks.push({ group, label, text, want, got });
+  // Each check is run later, in batches (see below), so the page stays responsive.
+  const add = (group, label, text, want, run) => checks.push({ group, label, text, want, run, got: null });
 
   for (const w of words) {
     const { text } = SG.parseWord(w);
-    for (const [kind, t] of disguises(text)) add('Blocked words in 7 disguises', kind, t, true, blocked(t));
+    for (const [kind, t] of disguises(text)) add('Blocked words in 7 disguises', kind, t, true, () => blocked(t));
   }
   for (const w of words) {
     const { text, fuzzy } = SG.parseWord(w);
     if (!fuzzy) continue;
-    for (const [kind, t] of misspellings(text)) add('Misspellings of ≈ words', kind, t, true, blocked(t));
+    for (const [kind, t] of misspellings(text)) add('Misspellings of ≈ words', kind, t, true, () => blocked(t));
   }
   words.forEach((w, i) => {
     const { text } = SG.parseWord(w);
     const [name, base] = ENGINES[i % ENGINES.length];
     const url = base + encodeURIComponent(text.split('').join('.'));
-    add('Searches on Google, Bing, DuckDuckGo, YouTube', name, url, true, !!SG.checkUrl(url, compiled, settings));
+    add('Searches on Google, Bing, DuckDuckGo, YouTube', name, url, true, () => !!SG.checkUrl(url, compiled, settings));
   });
   for (const site of sites) {
     const url = `https://www.${site}/`;
-    add('Blocked porn sites', site, url, true, !!SG.checkUrl(url, compiled, settings));
+    add('Blocked porn sites', site, url, true, () => !!SG.checkUrl(url, compiled, settings));
   }
-  for (const t of FOUND_IN_TESTING) add('Disguises found during testing', 'disguise', t, true, blocked(t));
+  for (const t of FOUND_IN_TESTING) add('Disguises found during testing', 'disguise', t, true, () => blocked(t));
 
   // Image search switch: image tabs are recognised, everything else is left alone.
   for (const u of ['https://www.google.com/search?q=cats&udm=2', 'https://www.google.se/search?q=cats&tbm=isch',
                    'https://www.bing.com/images/search?q=cats', 'https://duckduckgo.com/?q=cats&ia=images&iax=images',
                    'https://images.search.yahoo.com/search/images?p=cats', 'https://search.brave.com/images?q=cats'])
-    add('Image search switch', 'sent to normal results', u, true, !!SG.normalResultsFor(u));
+    add('Image search switch', 'sent to normal results', u, true, () => !!SG.normalResultsFor(u));
   for (const u of ['https://www.google.com/search?q=cats', 'https://www.bing.com/search?q=cats',
                    'https://duckduckgo.com/?q=cats', 'https://www.youtube.com/results?search_query=cats',
                    'https://en.wikipedia.org/wiki/Cat'])
-    add('Image search switch', 'left alone', u, false, !!SG.normalResultsFor(u));
+    add('Image search switch', 'left alone', u, false, () => !!SG.normalResultsFor(u));
 
   // Allowed phrases: help searches get through, anything else blocked still closes.
   const allowedCompiled = SG.compileAllowed(SG.HELP_PHRASES);
   const withAllowed = t => !!SG.findBlocked(t, compiled, settings.options, true, allowedCompiled);
   for (const t of ['how to quit porn', 'porn addiction help', 'stop masturbating tips', 'porn recovery stories'])
-    add('Allowed help phrases', 'gets through', t, false, withAllowed(t));
+    add('Allowed help phrases', 'gets through', t, false, () => withAllowed(t));
   for (const t of ['quit porn xxx', 'porn', 'free porn', 'porn addiction hentai'])
-    add('Allowed help phrases', 'still closes', t, true, withAllowed(t));
+    add('Allowed help phrases', 'still closes', t, true, () => withAllowed(t));
 
-  for (const q of EVERYDAY) add('Everyday searches stay open', 'search', q, false, blocked(q));
+  for (const q of EVERYDAY) add('Everyday searches stay open', 'search', q, false, () => blocked(q));
   for (const url of ['https://example.com/files/provpass.pdf', 'https://en.wikipedia.org/wiki/Sussex', 'https://www.bbc.co.uk/news',
                      'https://example.com/page?s=4553&term=55&q=8008', 'https://www.google.com/url?q=https://www.example.com/files/provpass.pdf']) {
-    add('Links that aren’t searches stay open', 'link', url, false, !!SG.checkUrl(url, compiled, settings));
+    add('Links that aren’t searches stay open', 'link', url, false, () => !!SG.checkUrl(url, compiled, settings));
   }
 
+  // ---------- Run the checks in small batches, so the page stays responsive ----------
+  let done = 0;
+  function step() {
+    const until = Math.min(checks.length, done + 250);
+    for (; done < until; done++) checks[done].got = checks[done].run();
+    if (done < checks.length) {
+      $('summary').textContent = `Checking… ${done.toLocaleString('en')} of ${checks.length.toLocaleString('en')}`;
+      setTimeout(step, 0);
+    } else {
+      render();
+    }
+  }
+  setTimeout(step, 0);
+
   // ---------- Show results ----------
+  function render() {
   const failed = checks.filter(c => c.want !== c.got);
   const groups = [...new Set(checks.map(c => c.group))];
   $('summary').textContent = failed.length
@@ -184,5 +207,6 @@
       ul.append(li);
     }
     details.append(h, ul);
+  }
   }
 })();

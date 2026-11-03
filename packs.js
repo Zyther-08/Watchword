@@ -11,6 +11,9 @@
 // their own: "bunda" is also Indonesian for mother and Czech for jacket.
 const BODY = ['ass', 'ahh', 'booty', 'butt', 'bum', 'bunda', 'culo'];
 const combos = (firsts, seconds) => firsts.flatMap(a => seconds.map(b => `+${a} ${b}`));
+const HER_ADJ = ['juicy', 'thick', 'thicc', 'phat', 'big', 'fat', 'soft', 'round', 'nice', 'tight', 'jiggly', 'huge', 'curvy',
+  'perfect', 'bouncy', 'massive', 'plump', 'sexy', 'wide', 'fine', 'stinky', 'smelly', 'sweaty', 'musky'];
+const GYM_CLOTHES = ['leggings', 'yoga pants', 'gym clothes', 'gym shorts', 'tights', 'spandex', 'gym leggings'];
 const PIXAR_MOMS = ['pixar mom', 'pixar moms', 'pixar mum', 'pixar mums', 'pixar mommy'];
 const BODY_SHAPE = ['body', 'bodies', 'bod', 'physique', 'figure', 'curves', 'curvy', 'thighs', 'hips', 'waist', 'proportions',
   'thick', 'thicc', 'booty', 'butt', 'ass'];
@@ -25,9 +28,14 @@ const BODY_SLANG = [
   // Not "her butt" or "her bum" on their own: parents search "rash on her bum".
   ...combos(['her'], ['ass', 'ahh', 'booty', 'bunda', 'culo']),
   '+big booty', '+fat booty', '+nice ass', '+bubble butt',
-  // "Buns" only after "her": cinnamon, burger and hair buns are everyday searches.
-  '+her buns', ...['juicy', 'thick', 'thicc', 'phat', 'big', 'fat', 'soft', 'round', 'nice', 'tight', 'jiggly', 'huge']
-    .map(a => `+her ${a} buns`), '+thicc buns', '+phat buns',
+  // "Buns" only after "her" or a body-shape word: cinnamon, burger and hair buns are everyday searches.
+  '+her buns', ...HER_ADJ.flatMap(a => [...BODY, 'buns'].map(b => `+her ${a} ${b}`)),
+  ...combos(['curvy', 'bouncy', 'thicc', 'phat', 'jiggly'], ['buns']),
+  // "Booty" is never innocent; "big ass" and "huge ass" are (Big Ass Fans, "huge ass spider").
+  ...combos(['round', 'bouncy', 'massive', 'huge', 'perfect', 'curvy', 'plump', 'jiggly', 'sexy', 'tight', 'soft', 'wide'], ['booty']),
+  ...combos(['booty', 'ass', 'ahh', 'buns', 'bunda', 'culo'], GYM_CLOTHES.map(c => 'in ' + c)),
+  ...combos(['her butt', 'her bum', 'her buns'], GYM_CLOTHES.map(c => 'in ' + c)),
+  ...combos(['leggings', 'yoga pants', 'gym shorts', 'spandex'], ['booty', 'ass', 'ahh']),
   // Cartoon-mom body-type memes ("Pixar mom body"), only next to a body word: "best Pixar moms" and
   // "cartoon mom costume" are everyday searches. The plain phrases are in the suggestive pack.
   ...combos(PIXAR_MOMS, [...BODY_SHAPE, 'build', 'built', 'shape', 'shaped', 'legs', 'girl', 'gf', 'girlfriend', 'type girl',
@@ -41,7 +49,10 @@ const BODY_SLANG = [
   ...combos(GYM_GIRLS, ['curves', 'curvy', 'thighs', 'hips', 'thick', 'thicc', 'booty', 'butt', 'ass', 'pixar mom'])
 ];
 const BODY_VERBS = ['eat', 'eating', 'ate', 'lick', 'licking', 'sniff', 'sniffing', 'smell', 'smelling'];
-const BODY_ACTS = [...combos(BODY_VERBS, BODY), ...combos(BODY_VERBS.map(v => v + ' her'), [...BODY, 'feet'])];
+// More verb forms, only before "her": on their own, "squeeze butt" is a glute exercise.
+const HER_VERBS = [...BODY_VERBS, 'smells', 'smelled', 'smelt', 'sniffs', 'sniffed', 'licks', 'licked', 'eats', 'grab', 'grabs',
+  'grabbing', 'grabbed', 'squeeze', 'squeezing', 'squeezed', 'slap', 'slapping', 'slapped'];
+const BODY_ACTS = [...combos(BODY_VERBS, BODY), ...combos(HER_VERBS.map(v => v + ' her'), [...BODY, 'buns', 'feet'])];
 // Acts that are only explicit as phrases. "Humping" alone is everyday (dogs), so only next to a
 // person; the bare word is in the everyday pack. Anatomy words only next to "against her" and similar.
 const PEOPLE_ALL = [...PEOPLE, 'girls', 'gurls', 'chicks', 'babes', 'wives', 'her', 'she', 'shes'];
@@ -49,6 +60,10 @@ const PHRASE_ACTS = [
   ...combos(['sit on', 'sits on', 'sitting on', 'sat on'], ['face', 'my face', 'his face', 'her face', 'your face']),
   ...combos(PEOPLE_ALL, ['humping', 'humps', 'humped']), '+pillow humping',
   ...combos(['penis', 'cock'], ['against her', 'on her', 'between her', 'inside her', 'in her']),
+  // On a face. Not "my face": cats, babies and brothers put things there too.
+  ...combos([...BODY, 'buns', 'feet'], ['on face', 'on his face', 'on her face', 'in face', 'in his face', 'in her face']),
+  '+face fart', '+face farting', ...combos(['fart', 'farts', 'farting', 'farted'], ['on face', 'on his face', 'in his face']),
+  ...combos(['girl', 'girls', 'gurl', 'chick', 'babe'], ['farting']),
   // "dick" is also a name (Moby Dick), so only in phrases no title uses.
   ...combos(['dick'], ['against her', 'between her', 'inside her'])
 ];
@@ -62,6 +77,25 @@ const STORIES = [
   '+x reader lemon', '+fanfic lemon', '+fanfiction lemon', '+monster romance', '+sex story', '+sex stories', '+dirty talk',
   // App and site names, as phrases where the name alone is also something else (Harley Quinn, the Dipsea trail).
   '+lush stories', '+quinn app', '+quinn audio', '+dipsea app', '+dipsea stories', '+dipsea story', '+dipsea audio'
+];
+
+// Fetish words that are only ever fetish words, and phrases for the rest. Not on their own: "vore"
+// (Swedish for "would be"), "age play" (mixed-age play), "belly stuffing" (pork belly stuffing),
+// "trampling" and "smothering" (news, recipes), "giantess" (Norse myths), "kink" (a kink in the neck).
+const KINK_PHRASES = [
+  'abdl', 'ddlg', 'paypig', 'feederism', 'feedee', 'ballbusting', 'shibari', '+rope bunny', '+chastity cage', '+tickle torture',
+  ...combos(['foot', 'feet', 'sole', 'soles', 'boot', 'boots', 'heel', 'heels', 'toe', 'toes', 'armpit', 'sock', 'socks'], ['worship']),
+  '+toe sucking', '+toes sucking', '+sucking toes', '+foot gagging', '+nylon feet', '+pantyhose feet',
+  // Not feet or socks on their own: "dog licking feet" and "dog sniffing socks" are everyday searches.
+  ...combos(['armpit', 'armpits', 'panty', 'panties'], ['sniffing', 'licking']),
+  ...combos(['sniffing', 'licking'], ['armpits', 'panties']),
+  // Exact, without repeated letters: "foot smoother" and "face smoother" are skincare products.
+  ...['face', 'foot', 'feet', 'butt', 'booty', 'ass', 'boob', 'boobs'].flatMap(a => [`${a} smother`, `${a} smothering`]),
+  ...combos(['mommy', 'daddy', 'choke', 'choking', 'breeding', 'praise', 'degradation', 'size', 'pet', 'foot', 'feet', 'primal',
+    'brat', 'impact', 'pain'], ['kink']),
+  ...combos(['giantess'], ['feet', 'foot', 'crush', 'crushing', 'vore', 'growth', 'shrink', 'shrunk', 'stomp', 'step', 'video', 'art']),
+  ...combos(['vore'], ['art', 'animation', 'comic', 'comics', 'story', 'stories', 'video', 'videos', 'game', 'games']),
+  ...combos(['soft', 'hard', 'same size', 'unbirth'], ['vore'])
 ];
 
 globalThis.WORD_PACKS = [
@@ -92,7 +126,7 @@ globalThis.WORD_PACKS = [
     checked: true,
     words: ['~fetish', 'kinky', '~bdsm', 'bondage', '~femdom', 'findom', '~dominatrix', '~cuckold', 'spank',
       'spanking', '~voyeur', '~upskirt', '~down blouse', '~golden shower', '~feet pics', '~ahegao', '~futanari',
-      '~ecchi', '~yaoi', '~milf', '~dilf', '~gilf', '~pawg', '~bbw', '+butt crush', '+butt crushing']
+      '~ecchi', '~yaoi', '~milf', '~dilf', '~gilf', '~pawg', '~bbw', '+butt crush', '+butt crushing', ...KINK_PHRASES]
   },
   {
     id: 'stories',
@@ -133,7 +167,7 @@ globalThis.WORD_PACKS = [
       '~instagram model', '~gravure', ...combos(['curvy'], PEOPLE),
       'shirtless', '+hot guy', '+hot men', '+asmr boyfriend', '+boyfriend asmr', '+asmr girlfriend', '+girlfriend asmr',
       '+boyfriend roleplay', '+girlfriend roleplay', '+asmr kissing', '+kissing asmr', '+kissing scene', '+kiss scene',
-      '+x reader', '+dark romance', '+reverse harem', '+book boyfriend', '+pixar mom', '+pixar mum', '+pixar mommy', '+gym girl', '+gym baddie',
+      '+x reader', '+dark romance', '+reverse harem', '+book boyfriend', '+pixar mom', '+pixar mum', '+pixar mommy', '+gym girl', '+gym baddie', '+latex catsuit', '+latex outfit', '+leather catsuit',
       ...combos(GYM_GIRLS, ['body', 'physique', 'figure', 'legs'])]
   },
   {
